@@ -1,6 +1,8 @@
 package com.wsh.questionservice.controller;
 
 import com.wsh.questionservice.model.Question;
+import com.wsh.questionservice.model.QuestionWrapper;
+import com.wsh.questionservice.model.Response;
 import com.wsh.questionservice.service.QuestionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,4 +43,21 @@ public class QuestionController {
     public ResponseEntity<String> updateQuestion(@RequestBody Question question) {
         return questionsService.updateQuestion(question);
     }
+
+    @GetMapping("generate/{category}/{numQuestions}")
+    public ResponseEntity<List<Integer>> getQuestionForQuiz(@PathVariable String category, @PathVariable Integer numQuestions) {
+        return questionsService.getQuestionForQuiz(category, numQuestions);
+    }
+
+    @PostMapping("getQuestions")
+    public ResponseEntity<List<QuestionWrapper>> getQuestionsFromId(@RequestBody List<Integer> questionIds) {
+        return questionsService.getQuestionsFromId(questionIds);
+    }
+
+    // getScore
+    @PostMapping("getScore")
+    public ResponseEntity<Integer> getScore(@RequestBody List<Response> responses) {
+        return questionsService.getScore(responses);
+    }
+
 }
