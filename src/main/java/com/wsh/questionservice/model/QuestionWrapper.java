@@ -28,14 +28,6 @@ public class QuestionWrapper {
         @NonNull
         private String option4;
 
-        public static List<QuestionWrapper> wrapQuestions(List<Question> questions) {
-                return questions.stream().map(
-                        question -> new QuestionWrapper(
-                                question.getId(),
-                                question.getQuestionTitle(),
-                                question.getOption1(),
-                                question.getOption2(),
-                                question.getOption3(),
-                                question.getOption4())).toList();
-        }
+        @NonNull
+        private Integer points;
 }
