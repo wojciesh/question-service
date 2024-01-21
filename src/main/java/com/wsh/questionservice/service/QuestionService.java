@@ -2,6 +2,7 @@ package com.wsh.questionservice.service;
 
 import com.wsh.questionservice.dao.QuestionDao;
 import com.wsh.questionservice.model.Question;
+import com.wsh.questionservice.helper.QuestionHelper;
 import com.wsh.questionservice.model.QuestionWrapper;
 import com.wsh.questionservice.model.Response;
 import org.springframework.http.HttpStatus;
@@ -63,6 +64,7 @@ public class QuestionService {
         }
     }
 
+    // TODO: Rename to `generateQuestionsForQuiz`
     public ResponseEntity<List<Integer>> getQuestionsForQuiz(String category, Integer numQuestions) {
         try {
             return new ResponseEntity<>(questionDao.getRandomQuestionsByCategory(category, numQuestions), HttpStatus.OK);
@@ -71,10 +73,11 @@ public class QuestionService {
         }
     }
 
+    // TODO: Rename to `getQuestionsByIds`
     public ResponseEntity<List<QuestionWrapper>> getQuestionsFromId(List<Integer> questionIds) {
         try {
             return new ResponseEntity<>(
-                        QuestionWrapper.wrapQuestions(questionDao.findAllById(questionIds)),
+                        QuestionHelper.wrapQuestions(questionDao.findAllById(questionIds)),
                         HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
@@ -82,6 +85,7 @@ public class QuestionService {
     }
 
     public ResponseEntity<Integer> getScore(List<Response> responses) {
+//        TODO: Check if the questions belong to the same quiz.
         try {
             List<Question> questions = questionDao.findAllById(responses.stream().map(Response::getId).toList());
             // Streams are lazy! :)
